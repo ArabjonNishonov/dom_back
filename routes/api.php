@@ -7,12 +7,20 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/favorite', function (Request $request) {
-    $data = [
-        'title' => 'Favorite Products',
-        'body' => 'Favorite Products',
-        'price' => 400,
-        'quantity' => 3,
-    ];
-    return response()->json(['message' => 'salom', 'data' => $data]);
+Route::prefix('admin')->group(function () {
+   Route::prefix('auth')->group(function () {
+       Route::get('login', );
+   });
+});
+
+Route::prefix('agent')->group(function () {
+    Route::prefix('auth')->group(function () {
+        Route::get('login', );
+    });
+});
+
+Route::prefix('customer')->group(function () {
+    Route::prefix('auth')->group(function () {
+        Route::get('login', );
+    });
 });
