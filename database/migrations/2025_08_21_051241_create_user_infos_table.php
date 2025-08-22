@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('user_infos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('extra_phone')->nullable();
+            $table->boolean('merried')->nullable()->default(false);
             $table->timestamps();
         });
     }

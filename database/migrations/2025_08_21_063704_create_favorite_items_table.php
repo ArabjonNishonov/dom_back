@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('news', function (Blueprint $table) {
+        Schema::create('favorite_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('favorite_id')->constrained('favorites')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->decimal('price')->default(0);
             $table->string('title');
-            $table->string('slug');
-            $table->text('body')->nullable();
+            $table->string('body')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('news');
+        Schema::dropIfExists('favorite_items');
     }
 };
