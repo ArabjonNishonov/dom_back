@@ -8,8 +8,12 @@ class Product extends Model
 {
     protected  $guarded = ['id'];
 
-    public function sub_category(){
-        return $this->belongsTo(SubCategory::class);
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+    public function conditions(){
+        return $this->belongsToMany(Condition::class);
     }
 //    protected $casts = [
 //        'description' => 'array',
