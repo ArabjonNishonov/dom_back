@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
 
 Route::prefix('auth')->group(function () {
     Route::get('login', ['AuthController', 'login']);
@@ -19,38 +19,37 @@ Route::prefix('user')->group(function () {
 });
 
 Route::prefix('admin')->group(function () {
-
     Route::prefix('profile')->group(function () {
         Route::get('/', ['AdminController', 'index']);
         Route::post('change-password', ['AdminController', 'store']);
         Route::put('update', ['AdminController', 'update']);
     });
-   Route::prefix('agents')->group(function () {
-       Route::get('list', ['AgentController', 'index']);
-       Route::post('create', ['AgentController', 'store']);
-       Route::get('{id}', ['AgentController', 'show']);
-       Route::put('{id}', ['AgentController', 'update']);
-       Route::delete('{id}', ['AgentController', 'destroy']);
-   });
+    Route::prefix('agents')->group(function () {
+        Route::get('list', ['AgentController', 'index']);
+        Route::post('create', ['AgentController', 'store']);
+        Route::get('{id}', ['AgentController', 'show']);
+        Route::put('{id}', ['AgentController', 'update']);
+        Route::delete('{id}', ['AgentController', 'destroy']);
+    });
 
-   Route::prefix('categories')->group(function () {
-       Route::get('list', ['CategoryController', 'index']);
-       Route::post('create', ['CategoryController', 'store']);
-       Route::get('{id}', ['CategoryController', 'show']);
-       Route::put('{id}', ['CategoryController', 'update']);
-       Route::delete('{id}', ['CategoryController', 'destroy']);
-   });
+    Route::prefix('categories')->group(function () {
+        Route::get('list', [CategoryController::class, 'index']);
+        Route::post('create', [CategoryController::class, 'store']);
+        Route::get('{id}', [CategoryController::class, 'show']);
+        Route::put('{id}', [CategoryController::class, 'update']);
+        Route::delete('{id}', [CategoryController::class, 'destroy']);
+    });
 
-   Route::prefix('customers')->group(function () {
-       Route::get('list', ['CustomerController', 'index']);
-       Route::get('{id}', ['CustomerController', 'show']);
-       Route::put('{id}', ['CustomerController', 'update']);
-       Route::delete('{id}', ['CustomerController', 'destroy']);
-   });
+    Route::prefix('customers')->group(function () {
+        Route::get('list', ['CustomerController', 'index']);
+        Route::get('{id}', ['CustomerController', 'show']);
+        Route::put('{id}', ['CustomerController', 'update']);
+        Route::delete('{id}', ['CustomerController', 'destroy']);
+    });
 });
 
 Route::prefix('agent')->group(function () {
-        Route::prefix('profile')->group(function () {
+    Route::prefix('profile')->group(function () {
         Route::get('/', ['AdminController', 'index']);
         Route::post('change-password', ['AdminController', 'store']);
         Route::put('update', ['AdminController', 'update']);
@@ -95,3 +94,10 @@ Route::prefix('customer')->group(function () {
     });
 });
 
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['uz', 'ru', 'en'])) {
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('lang.switch');
