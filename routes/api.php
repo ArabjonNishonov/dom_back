@@ -19,7 +19,7 @@ Route::prefix('user')->group(function () {
     Route::post('logout', ['AuthController', 'logout']);
 });
 
-Route::prefix('admin')->group(function () {
+Route::prefix('api')->group(function () {
     Route::prefix('profile')->group(function () {
         Route::get('/', ['AdminController', 'index']);
         Route::post('change-password', ['AdminController', 'store']);

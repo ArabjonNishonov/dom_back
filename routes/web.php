@@ -101,3 +101,5 @@ Route::get('/lang/{locale}', function ($locale) {
     }
     return redirect()->back();
 })->name('lang.switch');
+
+require __DIR__ . '/api.php';
